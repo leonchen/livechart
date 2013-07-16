@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <title>
+    </title>
+    <script type="text/javascript" src="flot/jquery.min.js"></script>
+    <script type="text/javascript" src="flot/jquery.flot.min.js"></script>
+    <script type="text/javascript" src="flot/jquery.flot.time.min.js"></script>
+    <script type="text/javascript" src="http://coffeescript.org/extras/coffee-script.js"></script>
+    <script type="text/javascript" src="livechart.js"></script>
+  </head>
+  <body>
+    <div id="livechart" style="width: 400px; height: 150px;"></div>
+    <script>
+      var liveChart = new LiveChart({
+        ele: $("#livechart"),
+        //dataUrl: 'http://127.0.0.1:2470/usage',
+        percentage: true
+      });
+
+      var idx = 0
+      function generateData() {
+        idx++;
+        var t = Date.now();
+        var ret = {
+          "test2": [t, Math.random() * 80 ]
+        }
+        if (idx % 2 == 0) ret["test1"] = [t, Math.random() * 20 ];
+        return ret;
+      }
+
+      var showData = function () {
+        liveChart.setData(generateData());
+        setTimeout(showData, 5000);
+      }
+      showData();
+    </script>
+  </body>
+</html>
